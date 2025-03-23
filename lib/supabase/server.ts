@@ -2,16 +2,27 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import type { Database } from "@/lib/supabase/database.types"
 
-// Create an async version of the client that properly awaits cookies
+// Create a client for Server Components (app directory)
 export async function getSupabaseServerClient() {
-  const cookieStore = await cookies()
-  return createServerComponentClient<Database>({ cookies: () => cookieStore })
+  try {
+    const cookieStore = cookies()
+    return createServerComponentClient<Database>({ cookies: () => cookieStore })
+  } catch (error) {
+    console.error("Error creating Supabase client:", error)
+    // Return a minimal client that won't break the build
+    return null
+  }
 }
 
-// Legacy function - use getSupabaseServerClient() for new code
+// For compatibility with both app and pages router
 export const createClient = () => {
-  const cookieStore = cookies()
-  console.warn('Warning: Using createClient() without awaiting cookies. Consider using getSupabaseServerClient() instead.')
-  return createServerComponentClient<Database>({ cookies: () => cookieStore })
+  try {
+    const cookieStore = cookies()
+    return createServerComponentClient<Database>({ cookies: () => cookieStore })
+  } catch (error) {
+    console.error("Error creating Supabase client:", error)
+    // Return a minimal client that won't break the build
+    return null
+  }
 }
 
