@@ -4,6 +4,8 @@
 
 [build.environment]
   NEXT_PUBLIC_NETLIFY_ENV = "true"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+  NPM_FLAGS = "--legacy-peer-deps --force"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs" 
