@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/client-pages"
 import { isDevelopment } from "@/lib/utils"
 
 // Admin email addresses
