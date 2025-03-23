@@ -32,9 +32,17 @@ export function isVercelBuild(): boolean {
   return process.env.NEXT_PUBLIC_VERCEL_ENV === "true"
 }
 
+export function isNetlifyBuild(): boolean {
+  return process.env.NEXT_PUBLIC_NETLIFY_ENV === "true" || !!process.env.NETLIFY
+}
+
+export function isDeploymentBuild(): boolean {
+  return isVercelBuild() || isNetlifyBuild()
+}
+
 export function isDevelopment(): boolean {
-  // Consider Vercel builds as non-development for compatibility
-  if (isVercelBuild()) {
+  // Consider cloud builds as non-development for compatibility
+  if (isDeploymentBuild()) {
     return false
   }
   return process.env.NODE_ENV === "development"
