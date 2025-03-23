@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
+    "vercel-build": "NEXT_PUBLIC_VERCEL_ENV=true next build",
     "start": "next start",
     "lint": "next lint",
     "seed-products": "node --experimental-json-modules scripts/seed-products.js",

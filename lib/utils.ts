@@ -28,7 +28,15 @@ export function isBrowser(): boolean {
   return typeof window !== "undefined"
 }
 
+export function isVercelBuild(): boolean {
+  return process.env.NEXT_PUBLIC_VERCEL_ENV === "true"
+}
+
 export function isDevelopment(): boolean {
+  // Consider Vercel builds as non-development for compatibility
+  if (isVercelBuild()) {
+    return false
+  }
   return process.env.NODE_ENV === "development"
 }
 
